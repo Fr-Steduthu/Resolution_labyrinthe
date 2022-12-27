@@ -129,6 +129,11 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Labyrinth_solver\Labyrinth_solver.vcxproj">
+      <Project>{d589b30f-4ebf-4462-9b3d-c25c239d326f}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
