@@ -1,14 +1,30 @@
 #pragma once
+
 namespace labyrinth
 {
-	class solver
+	namespace solvers
 	{
-	public:
+		class solver //Classe des heuristiques
+		{
+		public:
 
-	protected:
+			solver(std::string lab, const char& wall='#');
+			solver(labyrinth::dungeon);
+			virtual ~solver();
 
-	private:
+			//retrieve_path
+			//resolution_time
+			//display
 
-	};
+			virtual void move() = 0; //Code du bot
+
+		protected:
+
+			labyrinth::dungeon lab;
+
+		private:
+
+		};
+	}
 }
 
