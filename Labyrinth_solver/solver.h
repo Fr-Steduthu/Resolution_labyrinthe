@@ -4,7 +4,7 @@ namespace labyrinth
 {
 	namespace solvers
 	{
-		class solver //Classe des heuristiques
+		class solver //Classe mere des heuristiques
 		{
 		public:
 
