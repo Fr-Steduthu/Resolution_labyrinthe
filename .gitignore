@@ -34,5 +34,5 @@
 #VSStudio
 /.vs
 *.user
-*.filters
+#*.filters
 #*.vcxproj
