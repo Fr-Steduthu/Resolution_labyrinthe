@@ -30,6 +30,12 @@
     <ClInclude Include="tracer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="solver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="labyrinth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Labyrinth_solver.cpp">
@@ -38,13 +44,10 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="grid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="tracer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="solver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
