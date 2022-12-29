@@ -10,40 +10,71 @@ namespace labyrinth
 {
 	namespace
 	{
+		struct coords {
+			unsigned int x;
+			unsigned int y;
+		};
+
 		class grid
 		{
 		public:
-			//Depart a (0; 0), Sortie a (MAX_X; MAX_Y)
-			const unsigned int MAX_X;
-			const unsigned int MAX_Y;
 
-			//TODO : Le charactere du mur peut possiblement etre determine depuis le fichier, pusique le seul charactere qui n'est pas egal a " "
-			grid(std::ifstream, char wall = '#');
-			grid(std::string data, char wall = '#'); //Un mur ne peut pas etre de valeur " " => throw erreur si le cas
+			//On suppose que les terrains sont OBLIGATOIREMENT des carres
+			grid(const std::string& data, const char& call = '#') {
+				std::istringstream in(data);
+				size_t index = 0;
 
+				while (!in.eof()) {
+					char c;
+					in.get(c);
 
-			inline const bool& walkable(const unsigned int& x, const unsigned int& y) const {
-				return this->walkable_matrix[x][y];
-			}
+					if (c == '\n') {
+						this->_walkables.push_back(std::vector<bool>());
+						this->_MAX_X = this->_walkables.size();
 
-			inline operator std::string() const {
-				std::ostringstream s;
-
-				for (const std::vector<bool> column : this->walkable_matrix) {
-					for (const bool& walkable : column) {
-						s << (walkable ? " " : &this->wall);
+						index++;
+						continue;
 					}
-					s << "\n";
+
+					c == ' ' ? this->_walkables[index].push_back(true) : this->_walkables[index].push_back(false);
 				}
 
-				return s.str();
+				this->_MAX_Y = this->_walkables.size();
+			}
+			grid(std::vector<std::vector<bool>> data) : _MAX_X(data.size()), _MAX_Y(data[0].size()), _walkables(data) {}
+
+			inline coords entrance() const {
+				coords entrance;
+				entrance.x = 0;
+				entrance.y = 0;
+				return std::move(entrance);
+			}
+			inline coords exit() const {
+				coords exit_point;
+				exit_point.x = this->_MAX_X;
+				exit_point.y = this->_MAX_Y;
+				return std::move(exit_point);
+			}
+
+			inline const bool& walkable(const unsigned int& x, const unsigned int& y) const {
+				return this->_walkables[x][y];
+			}
+
+			inline const unsigned int& MAX_X() const {
+				return this->_MAX_X;
+			}
+			inline const unsigned int& MAX_Y() const {
+				return this->_MAX_Y;
 			}
 
 		protected:
 
 		private:
-			const std::vector<std::vector<bool>> walkable_matrix; //true = cas vide
-			const char wall;
+			//Depart a (0; 0), Sortie a (MAX_X; MAX_Y)
+			unsigned int _MAX_X;
+			unsigned int _MAX_Y;
+
+			std::vector<std::vector<bool>> _walkables; //true = case vide
 		};
 	}
 
