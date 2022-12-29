@@ -16,7 +16,7 @@ namespace labyrinth
 
 			solver(std::string lab, const char& wall = '#') : lab(labyrinth::dungeon(lab, wall)) {};
 			solver(dungeon d) : lab(d) {};
-			virtual ~solver();
+			virtual ~solver() {};
 
 			//retrieve_path
 			//resolution_time
