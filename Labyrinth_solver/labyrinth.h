@@ -28,8 +28,8 @@ namespace labyrinth
 		operator std::string() {
 			std::ostringstream s;
 
-			for (int x = 0; x <= this->lab.MAX_X; x++) {
-				for (int y = 0; y <= this->lab.MAX_Y; y++) {
+			for (int x = 0; x <= this->lab.MAX_X(); x++) {
+				for (int y = 0; y <= this->lab.MAX_Y(); y++) {
 
 					if(this->character.x == x && this->character.y == y) {
 						s << (this->wall == '#') ? "@" : "#";
