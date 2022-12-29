@@ -6,17 +6,18 @@ namespace labyrinth
 {
 	namespace 
 	{
+		enum sides {Right, Left};
+
 		class player
 		{
 		public:
+			//Setters et getters sans verification + innaccessible en dehors de labyrinth -> champs publics
+			unsigned int x;
+			unsigned int y;
 
 			//Memory
-			player();
+			player() : x(0), y(0), front(Up) {};
 			~player() {};
-
-			//Procedures
-			void move(const direction& dir); //mets a jour les coordonees et le path, ainsi que l'orientation
-			void move_relative(const direction& dir);
 
 			//Accessors
 			inline direction faces() const {
@@ -29,8 +30,6 @@ namespace labyrinth
 		protected:
 
 		private:
-			unsigned int x;
-			unsigned int y;
 
 			direction front; //indique la direction dnas laquelle "regarde" le joueur
 
