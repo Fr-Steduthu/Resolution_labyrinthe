@@ -37,11 +37,15 @@ namespace labyrinth
 				this->steps++;
 			}
 
+			void optimize() {
+				//TODO : supprimer les occurences du genre -> <- / v| ^| / <- -> / ...
+			}
+
 			//Accessors
 			unsigned int steps_taken() const {
 				return this->steps;
 			}
-			std::vector<std::vector<bool>> cells_stepped(); //Renvoie la string correspondant au chemin pris
+			const std::vector<direction>& cells_stepped() const;
 
 		protected:
 
