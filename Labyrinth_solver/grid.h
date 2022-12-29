@@ -40,6 +40,7 @@ namespace labyrinth
 				}
 
 				this->_MAX_Y = this->_walkables.size();
+				//TODO : verifier si tous les murs sotn a false
 			}
 			grid(std::vector<std::vector<bool>> data) : _MAX_X(data.size()), _MAX_Y(data[0].size()), _walkables(data) {}
 
