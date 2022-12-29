@@ -19,7 +19,7 @@ namespace labyrinth
 		{
 		public:
 
-			//On suppose que les terrains sont OBLIGATOIREMENT des carres
+			//On suppose que les terrains sont OBLIGATOIREMENT des rectangles
 			grid(const std::string& data, const char& call = '#') {
 				std::istringstream in(data);
 				size_t index = 0;
@@ -40,7 +40,7 @@ namespace labyrinth
 				}
 
 				this->_MAX_Y = this->_walkables.size();
-				//TODO : verifier si tous les murs sotn a false
+				//TODO : verifier si tous les murs sont a false
 			}
 			grid(std::vector<std::vector<bool>> data) : _MAX_X(data.size()), _MAX_Y(data[0].size()), _walkables(data) {}
 
