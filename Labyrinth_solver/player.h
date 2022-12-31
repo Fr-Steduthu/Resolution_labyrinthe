@@ -6,7 +6,6 @@ namespace labyrinth
 {
 	namespace 
 	{
-		enum sides {Right, Left};
 
 		class player
 		{
