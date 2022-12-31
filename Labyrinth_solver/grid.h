@@ -4,16 +4,12 @@
 #include <sstream>
 #include <string>
 
-#include "player.h"
+#include "coordinates.h"
 
 namespace labyrinth
 {
 	namespace
 	{
-		struct coords {
-			unsigned int x;
-			unsigned int y;
-		};
 
 		class grid
 		{
@@ -73,8 +69,8 @@ namespace labyrinth
 
 		private:
 			//Depart a (0; 0), Sortie a (MAX_X; MAX_Y)
-			unsigned int _MAX_X;
-			unsigned int _MAX_Y;
+			coordinate _MAX_X;
+			coordinate _MAX_Y;
 
 			std::vector<std::vector<bool>> _walkables; //true = case vide
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "tracer.h"
+#include "coordinates.h"
 
 namespace labyrinth
 {
@@ -11,8 +12,8 @@ namespace labyrinth
 		{
 		public:
 			//Setters et getters sans verification + innaccessible en dehors de labyrinth -> champs publics
-			unsigned int x;
-			unsigned int y;
+			coordinate x;
+			coordinate y;
 
 			//Memory
 			player() : x(0), y(0), front(Up) {};
