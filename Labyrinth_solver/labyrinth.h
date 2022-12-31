@@ -22,8 +22,8 @@ namespace labyrinth
 
 		//Returns wether or not the player has been moved
 		bool move(const direction& dir) {
-			int target_x(this->character.x);
-			int target_y(this->character.y);
+			int target_x(this->_player.x());
+			int target_y(this->_player.y());
 
 			switch (dir)
 			{
@@ -41,12 +41,12 @@ namespace labyrinth
 				break;
 			}
 
-			if (!this->lab.walkable(target_x, target_y)) {
+			if (!this->_grid.walkable(target_x, target_y)) {
 				return false;
 			}
 
-			this->character.x = target_x;
-			this->character.y = target_y;
+			this->_player.set_x(target_x);
+			this->_player.set_y(target_y);
 
 			return true;
 		}
@@ -56,15 +56,15 @@ namespace labyrinth
 		operator std::string() {
 			std::ostringstream s;
 
-			for (int x = 0; x <= this->lab.MAX_X(); x++) {
-				for (int y = 0; y <= this->lab.MAX_Y(); y++) {
+			for (coordinate x = 0; x <= this->_grid.MAX_X(); x++) {
+				for (coordinate y = 0; y <= this->_grid.MAX_Y(); y++) {
 
-					if(this->character.x == x && this->character.y == y) {
+					if(this->_player.x() == x && this->_player.y() == y) {
 						s << (this->wall == '#') ? "@" : "#";
 						continue;
 					}
 					
-					s << this->lab.walkable(x, y) ? " " : &this->wall;
+					s << this->_grid.walkable(x, y) ? " " : &this->wall;
 				}
 				s << "\n";
 			}
@@ -73,14 +73,24 @@ namespace labyrinth
 		}
 
 		/***Others**/
-		friend class solvers::solver;
+		const player& _character() const {
+			return this->_player;
+		}
+		player& _character() {
+			return this->_player;
+		}
+
+		const grid& _matrix() const {
+			return this->_grid;
+		}
+
 
 	protected:
 
 	private:
 
-		player character;
-		const grid lab;
+		player _player;
+		const grid _grid;
 
 		const char wall;
 	};

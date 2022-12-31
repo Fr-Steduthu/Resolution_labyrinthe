@@ -41,6 +41,10 @@ namespace labyrinth
 			}
 			grid(std::vector<std::vector<bool>> data) : _MAX_X(data.size()), _MAX_Y(data[0].size()), _walkables(data) {}
 
+			inline const bool& walkable(const unsigned int& x, const unsigned int& y) const {
+				return this->_walkables[x][y];
+			}
+
 			inline coords entrance() const {
 				coords entrance;
 				entrance.x = 0;
@@ -52,10 +56,6 @@ namespace labyrinth
 				exit_point.x = this->_MAX_X;
 				exit_point.y = this->_MAX_Y;
 				return std::move(exit_point);
-			}
-
-			inline const bool& walkable(const unsigned int& x, const unsigned int& y) const {
-				return this->_walkables[x][y];
 			}
 
 			inline const unsigned int& MAX_X() const {
@@ -74,7 +74,9 @@ namespace labyrinth
 
 			std::vector<std::vector<bool>> _walkables; //true = case vide
 
-			void check_format() const; // throw une erreur // TODO
+			void check_format() const {
+				// throw une erreur // TODO
+			}
 		};
 	}
 

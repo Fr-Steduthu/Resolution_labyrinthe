@@ -1,7 +1,7 @@
 #pragma once
 
 namespace labyrinth {
-	typedef unsigned int coordinate;
+	typedef unsigned long int coordinate;
 
 	struct coords {
 		coordinate x;

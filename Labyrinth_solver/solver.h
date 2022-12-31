@@ -26,7 +26,7 @@ namespace labyrinth
 			operator std::string() {
 				std::string s(this->lab);
 
-				//TODO
+				//TODO : inserer le sylmbole du personnage
 
 				return s;
 			}
@@ -34,8 +34,8 @@ namespace labyrinth
 		protected:
 			dungeon lab;
 
-			player& player() { return lab.character; }
-			const grid& grid() { return lab.lab; }
+			player& player() { return lab._character(); }
+			const grid& grid() { return lab._matrix(); }
 		private:
 
 		};

@@ -36,6 +36,9 @@
     <ClInclude Include="labyrinth.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="coordinates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Labyrinth_solver.cpp">

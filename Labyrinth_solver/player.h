@@ -11,29 +11,41 @@ namespace labyrinth
 		class player
 		{
 		public:
-			//Setters et getters sans verification + innaccessible en dehors de labyrinth -> champs publics
-			coordinate x;
-			coordinate y;
-
 			//Memory
-			player() : x(0), y(0), front(Up) {};
+			player() : _x(0), _y(0), _front(Up) {};
 			~player() {};
+
+			inline coordinate x() const  {
+				return this->_x;
+			}
+			inline coordinate y() const  {
+				return this->_y;
+			}
+
+			inline void set_x(coordinate n) {
+				this->_x = n;
+			}
+			inline void set_y(coordinate n) {
+				this->_y = n;
+			}
 
 			//Accessors
 			inline direction faces() const {
-				return this->front;
+				return this->_front;
 			}
 			inline const tracer& path_taken() const {
-				return this->path;
+				return this->_path;
 			}
 
 		protected:
 
 		private:
+			coordinate _x;
+			coordinate _y;
 
-			direction front; //indique la direction dnas laquelle "regarde" le joueur
+			direction _front; //indique la direction dnas laquelle "regarde" le joueur
 
-			tracer path;
+			tracer _path;
 		};
 	}
 }

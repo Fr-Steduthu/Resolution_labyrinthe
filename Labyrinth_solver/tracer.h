@@ -17,7 +17,8 @@ namespace labyrinth
 		{
 		public:
 			//Memory
-			//tracer();
+			tracer() : steps(0) {}
+			~tracer() = default;
 
 			//Procedures
 			void up() {
@@ -50,7 +51,7 @@ namespace labyrinth
 		protected:
 
 		private:
-			unsigned int steps;
+			unsigned long int steps;
 			std::vector<direction> path;
 		};
 	}
