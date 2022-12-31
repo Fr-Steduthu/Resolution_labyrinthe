@@ -21,7 +21,35 @@ namespace labyrinth
 		/**Fonctions du joueur**/
 
 		//Returns wether or not the player has been moved
-		bool move(const direction& dir);
+		bool move(const direction& dir) {
+			int target_x(this->character.x);
+			int target_y(this->character.y);
+
+			switch (dir)
+			{
+			case Up :
+				target_y += 1;
+				break;
+			case Left :
+				target_x += -1;
+				break;
+			case Right :
+				target_x += 1;
+				break;
+			case Down :
+				target_y += -1;
+				break;
+			}
+
+			if (!this->lab.walkable(target_x, target_y)) {
+				return false;
+			}
+
+			this->character.x = target_x;
+			this->character.y = target_y;
+
+			return true;
+		}
 		bool move_relative(const direction& dir);
 
 		/**Operators**/
