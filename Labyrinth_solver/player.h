@@ -33,7 +33,7 @@ namespace labyrinth
 			inline direction faces() const {
 				return this->_front;
 			}
-			inline const tracer& path_taken() const {
+			inline tracer path_taken() const { //On renvoie le tracer pour utiliser pouvoir utiliser la fonction tracer::optimize()
 				return this->_path;
 			}
 

@@ -38,15 +38,21 @@ namespace labyrinth
 				this->steps++;
 			}
 
-			void optimize() {
+			std::vector<direction> optimized() const {
+				tracer cpy(*this);
+
 				//TODO : supprimer les occurences du genre -> <- / v| ^| / <- -> / ...
+
+				return cpy.path;
 			}
 
 			//Accessors
 			unsigned int steps_taken() const {
 				return this->steps;
 			}
-			const std::vector<direction>& cells_stepped() const;
+			const std::vector<direction>& path_taken() const {
+				return this->path;
+			}
 
 		protected:
 

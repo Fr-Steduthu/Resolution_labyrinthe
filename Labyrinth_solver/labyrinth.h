@@ -14,8 +14,12 @@ namespace labyrinth
 	{
 	public:
 		//Memory
-		dungeon(std::ifstream file); // TODO : Le charactere du mur peut possiblement etre determine depuis le fichier, pusique le seul charactere qui n'est pas egal a " "
-		dungeon(std::string data, char wall = '#');
+
+		//dungeon(std::ifstream file);
+		dungeon(std::string data, char wall = '#') : wall(wall){
+			//Le _player par defaut est OK
+			this->_grid = labyrinth::grid(data, wall);
+		}
 		~dungeon() = default;
 
 		/**Fonctions du joueur**/
@@ -84,13 +88,12 @@ namespace labyrinth
 			return this->_grid;
 		}
 
-
 	protected:
 
 	private:
 
 		player _player;
-		const grid _grid;
+		grid _grid;
 
 		const char wall;
 	};
