@@ -76,16 +76,13 @@ namespace labyrinth
 			return s.str();
 		}
 
-		/***Others**/
-		const player& _character() const {
-			return this->_player;
-		}
-		player& _character() {
+		/**Data access**/
+		const player& character() const {
 			return this->_player;
 		}
 
-		const grid& _matrix() const {
-			return this->_grid;
+		bool walkable(const coordinate& x, const coordinate& y) const {
+			return this->_grid.walkable(x, y);
 		}
 
 	protected:

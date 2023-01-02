@@ -21,19 +21,25 @@ namespace labyrinth
 			inline coordinate y() const  {
 				return this->_y;
 			}
+			coords coordinates() const {
+				coords c;
+				c.x = this->_x;
+				c.y = this->_y;
+				return c;
+			}
 
-			inline void set_x(coordinate n) {
+			inline void set_x(const coordinate& n) {
 				this->_x = n;
 			}
-			inline void set_y(coordinate n) {
+			inline void set_y(const coordinate& n) {
 				this->_y = n;
 			}
 
 			//Accessors
-			inline direction faces() const {
+			inline const direction& faces() const {
 				return this->_front;
 			}
-			inline tracer path_taken() const { //On renvoie le tracer pour utiliser pouvoir utiliser la fonction tracer::optimize()
+			inline const tracer& path_taken() const { //On renvoie le tracer pour utiliser pouvoir utiliser la fonction tracer::optimize()
 				return this->_path;
 			}
 

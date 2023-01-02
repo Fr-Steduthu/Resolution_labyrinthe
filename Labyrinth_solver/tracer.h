@@ -47,7 +47,7 @@ namespace labyrinth
 			}
 
 			//Accessors
-			unsigned int steps_taken() const {
+			unsigned long int steps_taken() const {
 				return this->steps;
 			}
 			const std::vector<direction>& path_taken() const {
