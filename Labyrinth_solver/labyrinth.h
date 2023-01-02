@@ -65,12 +65,14 @@ namespace labyrinth
 
 					if(this->_player.x() == x && this->_player.y() == y) {
 						s << (this->wall == '#') ? "@" : "#";
+						std::cout << (this->wall == '#') ? "@" : "#";
 						continue;
 					}
 					
 					s << this->_grid.walkable(x, y) ? " " : &this->wall;
 				}
 				s << "\n";
+				std::cout << std::endl;
 			}
 
 			return s.str();

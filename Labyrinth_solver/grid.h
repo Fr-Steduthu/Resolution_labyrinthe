@@ -4,6 +4,8 @@
 #include <sstream>
 #include <string>
 
+#include <iostream>
+
 #include "coordinates.h"
 
 namespace labyrinth
@@ -26,23 +28,29 @@ namespace labyrinth
 				this->_walkables.push_back(std::vector<bool>());
 
 				while (!in.eof()) {
-					char c;
-					in.get(c);
+					std::string str;
+					in >> str;
 
-					if (c == '\n') {
-						this->_walkables.push_back(std::vector<bool>());
-						this->_MAX_X = this->_walkables.size() -1;
+					for (char c : str) {
+							if (c == '\n') {
+								this->_walkables.push_back(std::vector<bool>());
+								this->_MAX_X = this->_walkables.size() - 1;
 
-						index++;
-						continue;
+								std::cout << this->_MAX_X;
+
+								index++;
+								continue;
+							}
+
+						c == ' ' ? this->_walkables[index].push_back(true) : this->_walkables[index].push_back(false);
 					}
-
-					c == ' ' ? this->_walkables[index].push_back(true) : this->_walkables[index].push_back(false);
 				}
 
 				this->_MAX_Y = this->_walkables.size() -1;
 
 				//check_format();
+
+				std::cout << std::endl;
 			}
 
 			inline const bool& walkable(const unsigned int& x, const unsigned int& y) const {
@@ -57,25 +65,21 @@ namespace labyrinth
 			}
 			inline coords exit() const {
 				coords exit_point;
-				exit_point.x = this->_MAX_X;
-				exit_point.y = this->_MAX_Y;
+				exit_point.x = this->MAX_X();
+				exit_point.y = this->MAX_Y();
 				return std::move(exit_point);
 			}
 
 			inline const unsigned int& MAX_X() const {
-				return this->_MAX_X;
+				return this->_walkables.size() - 1;
 			}
 			inline const unsigned int& MAX_Y() const {
-				return this->_MAX_Y;
+				return this->_walkables[0].size() - 1;
 			}
 
 		protected:
 
 		private:
-			//Depart a (0; 0), Sortie a (MAX_X; MAX_Y)
-			coordinate _MAX_X;
-			coordinate _MAX_Y;
-
 			std::vector<std::vector<bool>> _walkables; //true = case vide
 
 			void check_format() const {
