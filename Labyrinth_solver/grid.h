@@ -85,7 +85,7 @@ namespace labyrinth
 			void check_format() const {
 				// throw une erreur // TODO
 				for (std::vector<bool> obj : this->_walkables) {
-					if (obj.size() != this->_MAX_Y) {
+					if (obj.size() != this->MAX_Y()) {
 						throw "Grid is not a rectangle";
 					}
 				}
