@@ -34,8 +34,7 @@ namespace labyrinth
 		protected:
 			dungeon lab;
 
-			player& player() { return lab._character(); }
-			const grid& grid() { return lab._matrix(); }
+			const player& player() { return lab.character(); }
 		private:
 
 		};
