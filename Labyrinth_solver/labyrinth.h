@@ -17,8 +17,10 @@ namespace labyrinth
 
 		//dungeon(std::ifstream file);
 		dungeon(std::string data, char wall = '#') : wall(wall){
+			LOG("\tBuilding dungeon");
 			//Le _player par defaut est OK
 			this->_grid = labyrinth::grid(data, wall);
+			LOG("\tdungeon built");
 		}
 		~dungeon() = default;
 
@@ -26,22 +28,22 @@ namespace labyrinth
 
 		//Returns wether or not the player has been moved
 		bool move(const direction& dir) {
-			int target_x(this->_player.x());
-			int target_y(this->_player.y());
+			coordinate target_x(this->_player.x());
+			coordinate target_y(this->_player.y());
 
 			switch (dir)
 			{
 			case Up :
-				target_y += 1;
-				break;
-			case Left :
 				target_x += -1;
 				break;
+			case Left :
+				target_y += -1;
+				break;
 			case Right :
-				target_x += 1;
+				target_y += 1;
 				break;
 			case Down :
-				target_y += -1;
+				target_x += +1;
 				break;
 			}
 
@@ -51,6 +53,7 @@ namespace labyrinth
 
 			this->_player.set_x(target_x);
 			this->_player.set_y(target_y);
+			this->_player.set_facing(dir);
 
 			return true;
 		}
@@ -64,15 +67,14 @@ namespace labyrinth
 				for (coordinate y = 0; y <= this->_grid.MAX_Y(); y++) {
 
 					if(this->_player.x() == x && this->_player.y() == y) {
-						s << (this->wall == '#') ? "@" : "#";
-						std::cout << (this->wall == '#') ? "@" : "#";
+						s << (this->wall == '#' ? "@" : "#");
+						//LOG("Player is at (" << x << "; " << y << ")");
 						continue;
 					}
 					
-					s << this->_grid.walkable(x, y) ? " " : &this->wall;
+					s << (this->_grid.walkable(x, y) ? " " : &this->wall);
 				}
 				s << "\n";
-				std::cout << std::endl;
 			}
 
 			return s.str();

@@ -17,25 +17,21 @@ namespace labyrinth
 		{
 		public:
 			//Memory
-			tracer() : steps(0) {}
+			tracer() {}
 			~tracer() = default;
 
 			//Procedures
 			void up() {
 				this->path.push_back(Up);
-				this->steps++;
 			}
 			void down() {
 				this->path.push_back(Down);
-				this->steps++;
 			}
 			void left() {
 				this->path.push_back(Left);
-				this->steps++;
 			}
 			void right() {
 				this->path.push_back(Right);
-				this->steps++;
 			}
 
 			std::vector<direction> optimized() const {
@@ -47,9 +43,10 @@ namespace labyrinth
 			}
 
 			//Accessors
-			unsigned long int steps_taken() const {
-				return this->steps;
+			size_t steps_taken() const {
+				return this->path.size();
 			}
+
 			const std::vector<direction>& path_taken() const {
 				return this->path;
 			}
@@ -57,7 +54,6 @@ namespace labyrinth
 		protected:
 
 		private:
-			unsigned long int steps;
 			std::vector<direction> path;
 		};
 	}

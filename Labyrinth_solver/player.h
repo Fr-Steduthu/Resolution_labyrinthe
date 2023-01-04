@@ -12,32 +12,36 @@ namespace labyrinth
 		{
 		public:
 			//Memory
-			player() : _x(0), _y(0), _front(Up) {};
+			player() : _facing(Up) {
+				this->_coordinates.x = 0;
+				this->_coordinates.y = 0;
+			};
 			~player() {};
 
+			
 			inline coordinate x() const  {
-				return this->_x;
+				return this->_coordinates.x;
 			}
 			inline coordinate y() const  {
-				return this->_y;
+				return this->_coordinates.y;
 			}
-			coords coordinates() const {
-				coords c;
-				c.x = this->_x;
-				c.y = this->_y;
-				return c;
+			inline coords coordinates() const {
+				return this->_coordinates;
 			}
 
 			inline void set_x(const coordinate& n) {
-				this->_x = n;
+				this->_coordinates.x = n;
 			}
 			inline void set_y(const coordinate& n) {
-				this->_y = n;
+				this->_coordinates.y = n;
+			}
+			inline void set_facing(const direction& dir) {
+				this->_facing = dir;
 			}
 
 			//Accessors
 			inline const direction& faces() const {
-				return this->_front;
+				return this->_facing;
 			}
 			inline const tracer& path_taken() const { //On renvoie le tracer pour utiliser pouvoir utiliser la fonction tracer::optimize()
 				return this->_path;
@@ -46,10 +50,9 @@ namespace labyrinth
 		protected:
 
 		private:
-			coordinate _x;
-			coordinate _y;
+			coords _coordinates;
 
-			direction _front; //indique la direction dnas laquelle "regarde" le joueur
+			direction _facing; //indique la direction dans laquelle "regarde" le joueur
 
 			tracer _path;
 		};

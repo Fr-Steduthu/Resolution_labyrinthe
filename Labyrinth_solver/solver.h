@@ -8,7 +8,7 @@ namespace labyrinth
 {
 	namespace solvers
 	{
-		enum state { victory, defeat, running, };
+		enum state { victory, defeat, running, movement_denied };
 
 		class solver //Classe mere des heuristiques
 		{
@@ -34,7 +34,6 @@ namespace labyrinth
 		protected:
 			dungeon lab;
 
-			const player& player() { return lab.character(); }
 		private:
 
 		};
