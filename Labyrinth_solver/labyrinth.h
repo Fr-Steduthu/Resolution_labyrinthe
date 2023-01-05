@@ -10,6 +10,8 @@
 
 namespace labyrinth
 {
+	enum facing { Front, Back, Left, Right };
+
 	class dungeon
 	{
 	public:
@@ -57,11 +59,80 @@ namespace labyrinth
 
 			return true;
 		}
-		bool move_relative(const direction& dir);
+		bool move(const facing& dir) { //move_relative(up) pour aller en definitive autre part qua droite est tres moyen
+			switch (this->_player.faces()) {
+			case direction::Up :
+				switch (dir) {
+				case facing::Front:
+					this->move(direction::Up);
+					break;
+				case facing::Left:
+					this->move(direction::Left);
+					break;
+				case facing::Right:
+					this->move(direction::Right);
+					break;
+				case facing::Back:
+					this->move(direction::Down);
+					break;
+				}
+				break;
+			case direction::Left :
+				switch (dir) {
+				case facing::Front:
+					this->move(direction::Left);
+					break;
+				case facing::Left:
+					this->move(direction::Down);
+					break;
+				case facing::Right:
+					this->move(direction::Up);
+					break;
+				case facing::Back :
+					this->move(direction::Right);
+					break;
+				}
+				break;
+			case direction::Right :
+				switch (dir) {
+				case facing::Front :
+					this->move(direction::Right);
+					break;
+				case facing::Left:
+					this->move(direction::Up);
+					break;
+				case facing::Right:
+					this->move(direction::Down);
+					break;
+				case facing::Back:
+					this->move(direction::Left);
+					break;
+				}
+				break;
+			case direction::Down :
+				switch (dir) {
+				case facing::Front:
+					this->move(direction::Down);
+					break;
+				case facing::Left:
+					this->move(direction::Right);
+					break;
+				case facing::Right:
+					this->move(direction::Left);
+					break;
+				case facing::Back:
+					this->move(direction::Up);
+					break;
+				}
+				break;
+			}
+		}
 
+		/**Grid & Player functions**/
 		inline bool is_over() const { return this->is_won() || this->is_stuck(); }
 		inline bool is_won() const { return equals(this->_player.coordinates(), this->_grid.exit()); }
 		inline bool is_stuck() const { return false; }
+
 		/**Operators**/
 		operator std::string() {
 			std::ostringstream s;
