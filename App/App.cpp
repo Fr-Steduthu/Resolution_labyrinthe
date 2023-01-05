@@ -16,8 +16,8 @@ labyrinth_solver::labyrinth&& play(labyrinth_solver::labyrinth&& c) {
 		std::getline(std::cin, s);
 		if (s == "up") { c.move(labyrinth_solver::direction::Up); }
 		if (s == "down") { c.move(labyrinth_solver::direction::Down); }
-		if (s == "left") { c.move(labyrinth_solver::direction::Left);}
-		if (s == "right") { c.move(labyrinth_solver::direction::Right);}
+		if (s == "left") { c.move(labyrinth_solver::direction::Left); }
+		if (s == "right") { c.move(labyrinth_solver::direction::Right); }
 		std::cout << c << std::endl;
 	}
 
@@ -32,10 +32,12 @@ int main()
 	std::ostringstream data("");
 
 	while (!data_input.eof()) {
-		data << data_input.get();
+		std::string s;
+		std::getline(data_input, s);
+		data << s << (data_input.eof() ? "" : "\n");
 	}
 
-	std::string d("   #######\n         #\n####  ####\n#     #  #\n#  #  #  #\n#  #      \n#######   ");
+	std::string d("   #######\n         #\n####  ####\n#     #  #\n#  #  #  #\n#  #      \n#######   \n");
 
 	labyrinth_solver::labyrinth lab(data.str());
 

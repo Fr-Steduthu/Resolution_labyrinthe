@@ -19,16 +19,17 @@ namespace labyrinth_solver
 			grid() = default; //Ne sert qu'a initialiser les champs
 
 			//On suppose que les terrains sont OBLIGATOIREMENT des rectangles
-			grid(const std::string& data, const char& wall = '#') {
+			grid(const std::string& data) {
 				LOG("\t\tBuilding grid");
 				std::istringstream in(data);
-				size_t index = 0;
+				size_t index = -1;
 
 
 				while (!in.eof()) {
-
+					index++;
 					this->_walkables.push_back(std::vector<bool>());
 					LOG("Reading row " << index);
+
 
 					std::string str;
 					std::getline(in, str);
@@ -39,8 +40,9 @@ namespace labyrinth_solver
 						c == ' ' ? this->_walkables[index].push_back(true) : this->_walkables[index].push_back(false);
 					}
 					
-					index++;
 				}
+
+				this->_walkables.pop_back(); //Supression de la ligne vide
 
 				//check_format();
 				LOG("\t\tgrid built");
@@ -51,6 +53,8 @@ namespace labyrinth_solver
 				//this->_walkables[x][y] ? LOG("\t(" << x << "; " << y << ") is walkable") : LOG("\t(" << x << "; " << y << ") is NOT walkable");
 
 				if (x > this->MAX_X() || y > this->MAX_Y()) return false;
+
+				LOG("(" << x << ", " << y << ")");
 
 				return this->_walkables[x][y];
 			}

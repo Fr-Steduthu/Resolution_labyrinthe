@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <fstream>
 
 #include "tracer.h"
 #include "player.h"
@@ -17,11 +18,21 @@ namespace labyrinth_solver
 	public:
 		//Memory
 
-		//dungeon(std::ifstream file);
+		labyrinth(std::ifstream file, const char& wall = '#') : wall(wall) {
+			std::ostringstream data;
+
+			while (!file.eof()) {
+				std::string s;
+				std::getline(file, s);
+				data << s << (file.eof() ? "" : "\n");
+			}
+
+			this->_grid = grid(data.str());
+		}
 		labyrinth(std::string data, char wall = '#') : wall(wall){
 			LOG("\tBuilding dungeon");
 			//Le _player par defaut est OK
-			this->_grid = labyrinth_solver::grid(data, wall);
+			this->_grid = labyrinth_solver::grid(data);
 			LOG("\tdungeon built");
 		}
 		~labyrinth() = default;
@@ -145,6 +156,9 @@ namespace labyrinth_solver
 		/**Data access**/
 		const player& character() const {
 			return this->_player;
+		}
+		const direction& character_facing() const {
+			return this->_player_direction;
 		}
 
 		bool walkable(const coordinate& x, const coordinate& y) const {
