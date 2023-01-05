@@ -59,6 +59,9 @@ namespace labyrinth
 		}
 		bool move_relative(const direction& dir);
 
+		inline bool is_over() const { return this->is_won() || this->is_stuck(); }
+		inline bool is_won() const { return equals(this->_player.coordinates(), this->_grid.exit()); }
+		inline bool is_stuck() const { return false; }
 		/**Operators**/
 		operator std::string() {
 			std::ostringstream s;

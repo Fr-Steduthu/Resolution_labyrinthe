@@ -10,4 +10,13 @@ namespace labyrinth {
 		coordinate x;
 		coordinate y;
 	};
+
+	bool equals(const coords& self, const coords& other) {
+		return (
+			(self.x == other.x)
+			&&
+			(self.y == other.y)
+			)
+		;
+	}
 }
