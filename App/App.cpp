@@ -3,7 +3,28 @@
 #include <string>
 #include <fstream>
 
-#include "../Labyrinth_solver/labyrinth.h"
+#include "../Labyrinth_solver/pch.h"
+
+
+labyrinth_solver::labyrinth&& play(labyrinth_solver::labyrinth&& c) {
+
+	std::cout << "Game starting" << std::endl;
+
+	while (!c.is_over()) {
+		std::cout.flush();
+		std::string s;
+		std::getline(std::cin, s);
+		if (s == "up") { c.move(labyrinth_solver::direction::Up); }
+		if (s == "down") { c.move(labyrinth_solver::direction::Down); }
+		if (s == "left") { c.move(labyrinth_solver::direction::Left);}
+		if (s == "right") { c.move(labyrinth_solver::direction::Right);}
+		std::cout << c << std::endl;
+	}
+
+	std::cout << "Game over" << std::endl;
+
+	return std::move(c);
+}
 
 int main()
 {
@@ -16,28 +37,19 @@ int main()
 
 	std::string d("   #######\n         #\n####  ####\n#     #  #\n#  #  #  #\n#  #      \n#######   ");
 
-	labyrinth::dungeon lab(d);
+	labyrinth_solver::labyrinth lab(data.str());
 
 	//std::cout << (std::string) lab;
 
-	lab.move(labyrinth::direction::Right);
-	lab.move(labyrinth::direction::Right);
-	lab.move(labyrinth::direction::Right);
-	lab.move(labyrinth::direction::Down);
-	lab.move(labyrinth::direction::Right);
-	lab.move(labyrinth::direction::Right);
-	lab.move(labyrinth::direction::Down);
-	lab.move(labyrinth::direction::Down);
-	lab.move(labyrinth::direction::Down);
-	lab.move(labyrinth::direction::Down);
-	lab.move(labyrinth::direction::Right);
-	lab.move(labyrinth::direction::Right);
-	lab.move(labyrinth::direction::Right);
-	lab.move(labyrinth::direction::Right);
-	lab.move(labyrinth::direction::Right);
-	lab.move(labyrinth::direction::Down);
+	std::cout << lab;
+
+	lab.move(labyrinth_solver::Down);
 
 	std::cout << (std::string) lab;
 
+	labyrinth_solver::labyrinth over(std::move(play(std::move(lab))));
+
 	//lab.character().path_taken();
+
+	return 0;
 }

@@ -1,10 +1,13 @@
 #pragma once
 
+#include <iostream>
+#include <string>
+
 #include "labyrinth.h"
 #include "grid.h"
 #include "player.h"
 
-namespace labyrinth
+namespace labyrinth_solver
 {
 	namespace solvers
 	{
@@ -14,25 +17,38 @@ namespace labyrinth
 		{
 		public:
 
-			solver(std::string lab, const char& wall = '#') : lab(labyrinth::dungeon(lab, wall)) {};
-			solver(dungeon d) : lab(d) {};
+			solver(std::string lab, const char& wall = '#') : lab(labyrinth_solver::labyrinth(lab, wall)), last_move_state(running) {};
+			solver(labyrinth d) : lab(d), last_move_state(running) {};
 			virtual ~solver() {};
 
-			//retrieve_path
 			//resolution_time
 
-			virtual state move() = 0; //Code du bot
+			state step() {
+				this->last_move_state = this->move();
+				return this->last_move_state;
+			}
 
-			operator std::string() {
-				std::string s(this->lab);
+			bool solve() {
+				//start chrono
+				while (this->last_move_state != victory && this->last_move_state != defeat) {
+					this->step();
+				}
+				//end chrono
+			}
 
-				//TODO : inserer le sylmbole du personnage
+			inline operator std::string() {
+				return this->lab.operator std::string();
+			}
 
-				return s;
+			std::ostream& operator<<(std::ostream& out) {
+				return (out << std::string(*this));
 			}
 
 		protected:
-			dungeon lab;
+			labyrinth lab;
+			state last_move_state;
+
+			virtual state move() = 0; //Code du bot
 
 		private:
 

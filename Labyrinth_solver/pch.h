@@ -13,4 +13,9 @@
 #include "player.h"
 #include "tracer.h"
 
+#include "coordinates.h"
+
+#include "labyrinth.h"
+#include "solver.h"
+
 #endif //PCH_H

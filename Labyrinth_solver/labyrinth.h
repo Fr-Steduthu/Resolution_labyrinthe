@@ -8,23 +8,23 @@
 #include "player.h"
 #include "grid.h"
 
-namespace labyrinth
+namespace labyrinth_solver
 {
-	enum facing { Front, Back, Left, Right };
+	enum facing { Front, Back, LeftSide, RightSide };
 
-	class dungeon
+	class labyrinth
 	{
 	public:
 		//Memory
 
 		//dungeon(std::ifstream file);
-		dungeon(std::string data, char wall = '#') : wall(wall){
+		labyrinth(std::string data, char wall = '#') : wall(wall){
 			LOG("\tBuilding dungeon");
 			//Le _player par defaut est OK
-			this->_grid = labyrinth::grid(data, wall);
+			this->_grid = labyrinth_solver::grid(data, wall);
 			LOG("\tdungeon built");
 		}
-		~dungeon() = default;
+		~labyrinth() = default;
 
 		/**Fonctions du joueur**/
 
@@ -32,44 +32,32 @@ namespace labyrinth
 		bool move(const direction& dir) {
 			coordinate target_x(this->_player.x());
 			coordinate target_y(this->_player.y());
+			
+			player cpy(this->_player);
+			cpy.move(dir);
 
-			switch (dir)
-			{
-			case Up :
-				target_x += -1;
-				break;
-			case Left :
-				target_y += -1;
-				break;
-			case Right :
-				target_y += 1;
-				break;
-			case Down :
-				target_x += +1;
-				break;
-			}
-
-			if (!this->_grid.walkable(target_x, target_y)) {
+			if (!this->_grid.walkable(cpy.coordinates())) {
 				return false;
 			}
 
-			this->_player.set_x(target_x);
-			this->_player.set_y(target_y);
-			this->_player.set_facing(dir);
+			LOG(target_x << ", " << target_y << "is walkable");
+
+			this->_player = cpy;
+			this->_player_direction = dir;
 
 			return true;
 		}
-		bool move(const facing& dir) { //move_relative(up) pour aller en definitive autre part qua droite est tres moyen
-			switch (this->_player.faces()) {
+		bool move(const facing& dir) {
+			switch (this->_player_direction) {
 			case direction::Up :
 				switch (dir) {
 				case facing::Front:
 					this->move(direction::Up);
 					break;
-				case facing::Left:
+				case facing::LeftSide:
 					this->move(direction::Left);
 					break;
-				case facing::Right:
+				case facing::RightSide:
 					this->move(direction::Right);
 					break;
 				case facing::Back:
@@ -82,10 +70,10 @@ namespace labyrinth
 				case facing::Front:
 					this->move(direction::Left);
 					break;
-				case facing::Left:
+				case facing::LeftSide:
 					this->move(direction::Down);
 					break;
-				case facing::Right:
+				case facing::RightSide:
 					this->move(direction::Up);
 					break;
 				case facing::Back :
@@ -98,10 +86,10 @@ namespace labyrinth
 				case facing::Front :
 					this->move(direction::Right);
 					break;
-				case facing::Left:
+				case facing::LeftSide:
 					this->move(direction::Up);
 					break;
-				case facing::Right:
+				case facing::RightSide:
 					this->move(direction::Down);
 					break;
 				case facing::Back:
@@ -114,10 +102,10 @@ namespace labyrinth
 				case facing::Front:
 					this->move(direction::Down);
 					break;
-				case facing::Left:
+				case facing::LeftSide:
 					this->move(direction::Right);
 					break;
-				case facing::Right:
+				case facing::RightSide:
 					this->move(direction::Left);
 					break;
 				case facing::Back:
@@ -130,11 +118,11 @@ namespace labyrinth
 
 		/**Grid & Player functions**/
 		inline bool is_over() const { return this->is_won() || this->is_stuck(); }
-		inline bool is_won() const { return equals(this->_player.coordinates(), this->_grid.exit()); }
+		inline bool is_won() const { return this->_player.x() == this->_grid.exit().x && this->_grid.exit().y == this->_player.y(); }
 		inline bool is_stuck() const { return false; }
 
 		/**Operators**/
-		operator std::string() {
+		operator std::string() const {
 			std::ostringstream s;
 
 			for (coordinate x = 0; x <= this->_grid.MAX_X(); x++) {
@@ -168,8 +156,14 @@ namespace labyrinth
 	private:
 
 		player _player;
+		direction _player_direction; //indique la direction dans laquelle "regarde" le joueur
+
 		grid _grid;
 
 		const char wall;
 	};
+
+	std::ostream& operator<<(std::ostream& out, const labyrinth& self) {
+		return (out << (std::string) self);
+	}
 }

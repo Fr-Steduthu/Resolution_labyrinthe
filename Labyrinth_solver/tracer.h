@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-namespace labyrinth
+namespace labyrinth_solver
 {
 
 	enum direction
@@ -34,6 +34,10 @@ namespace labyrinth
 				this->path.push_back(Right);
 			}
 
+			void append(const direction& dir) {
+				this->path.push_back(dir);
+			}
+
 			std::vector<direction> optimized() const {
 				tracer cpy(*this);
 
@@ -57,19 +61,4 @@ namespace labyrinth
 			std::vector<direction> path;
 		};
 	}
-
-
-	/*std::string(const direction& dir) {
-		switch (dir)
-		{
-		case Up :
-			return std::string("up");
-		case Down :
-			return std::string("down");
-		case Left : 
-			return std::string("left");
-		case Right :
-			return std::string("right");
-		}
-	}*/
 }

@@ -3,7 +3,7 @@
 #define DEBUG
 #include "logger.h"
 
-namespace labyrinth {
+namespace labyrinth_solver {
 	typedef size_t coordinate; //unsigned long int
 
 	struct coords {

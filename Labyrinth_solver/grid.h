@@ -3,12 +3,11 @@
 #include <vector>
 #include <sstream>
 #include <string>
-
 #include <iostream>
 
 #include "coordinates.h"
 
-namespace labyrinth
+namespace labyrinth_solver
 {
 	namespace
 	{
@@ -56,17 +55,21 @@ namespace labyrinth
 				return this->_walkables[x][y];
 			}
 
-			inline coords&& entrance() const {
+			inline bool walkable(const coords& c) const {
+				return this->walkable(c.x, c.y);
+			}
+
+			/*inline coords entrance() const {
 				coords entrance;
 				entrance.x = 0;
 				entrance.y = 0;
-				return std::move(entrance);
-			}
-			inline coords&& exit() const {
+				return entrance;
+			}*/
+			inline coords exit() const {
 				coords exit_point;
 				exit_point.x = this->MAX_X();
 				exit_point.y = this->MAX_Y();
-				return std::move(exit_point);
+				return exit_point;
 			}
 
 			inline coordinate MAX_X() const {
@@ -81,16 +84,6 @@ namespace labyrinth
 		private:
 			std::vector<std::vector<bool>> _walkables;
 
-			void check_format() const {
-				// throw une erreur // TODO
-				for (std::vector<bool> obj : this->_walkables) {
-					if (obj.size() != this->MAX_Y()) {
-						throw "Grid is not a rectangle";
-					}
-				}
-
-				//TODO : check si les bords sont biens des murs sauf 4
-			}
 		};
 	}
 
