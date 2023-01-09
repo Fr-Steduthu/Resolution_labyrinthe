@@ -24,7 +24,12 @@ namespace labyrinth_solver
 			//resolution_time
 
 			state step() {
-				this->last_move_state = this->move();
+				if (this->last_move_state == victory || this->lab.is_won()) {
+					this->last_move_state = victory;
+				}
+				else {
+					this->last_move_state = this->move();
+				}
 				return this->last_move_state;
 			}
 

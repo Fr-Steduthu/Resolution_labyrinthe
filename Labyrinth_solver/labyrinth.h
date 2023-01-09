@@ -58,79 +58,12 @@ namespace labyrinth_solver
 
 			return true;
 		}
-		bool move(const facing& dir) {
-			switch (this->_player_direction) {
-			case direction::Up :
-				switch (dir) {
-				case facing::Front:
-					this->move(direction::Up);
-					break;
-				case facing::LeftSide:
-					this->move(direction::Left);
-					break;
-				case facing::RightSide:
-					this->move(direction::Right);
-					break;
-				case facing::Back:
-					this->move(direction::Down);
-					break;
-				}
-				break;
-			case direction::Left :
-				switch (dir) {
-				case facing::Front:
-					this->move(direction::Left);
-					break;
-				case facing::LeftSide:
-					this->move(direction::Down);
-					break;
-				case facing::RightSide:
-					this->move(direction::Up);
-					break;
-				case facing::Back :
-					this->move(direction::Right);
-					break;
-				}
-				break;
-			case direction::Right :
-				switch (dir) {
-				case facing::Front :
-					this->move(direction::Right);
-					break;
-				case facing::LeftSide:
-					this->move(direction::Up);
-					break;
-				case facing::RightSide:
-					this->move(direction::Down);
-					break;
-				case facing::Back:
-					this->move(direction::Left);
-					break;
-				}
-				break;
-			case direction::Down :
-				switch (dir) {
-				case facing::Front:
-					this->move(direction::Down);
-					break;
-				case facing::LeftSide:
-					this->move(direction::Right);
-					break;
-				case facing::RightSide:
-					this->move(direction::Left);
-					break;
-				case facing::Back:
-					this->move(direction::Up);
-					break;
-				}
-				break;
-			}
+		bool move(const facing& f) {
+			return this->move(this->facing_to_absolute(f));
 		}
 
-		/**Grid & Player functions**/
-		inline bool is_over() const { return this->is_won() || this->is_stuck(); }
+		/**Grid / Player functions**/
 		inline bool is_won() const { return this->_player.x() == this->_grid.exit().x && this->_grid.exit().y == this->_player.y(); }
-		inline bool is_stuck() const { return false; }
 
 		/**Operators**/
 		operator std::string() const {
@@ -160,6 +93,9 @@ namespace labyrinth_solver
 		const direction& character_facing() const {
 			return this->_player_direction;
 		}
+		void character_rotate(const facing& f) {
+			this->_player_direction = this->facing_to_absolute(f);
+		}
 
 		bool walkable(const coordinate& x, const coordinate& y) const {
 			return this->_grid.walkable(x, y);
@@ -175,6 +111,58 @@ namespace labyrinth_solver
 		grid _grid;
 
 		const char wall;
+
+		direction facing_to_absolute(const facing& f) {
+			switch (this->_player_direction) {
+			case direction::Up:
+				switch (f) {
+				case facing::Front:
+					return Up;
+				case facing::LeftSide:
+					return Left;
+				case facing::RightSide:
+					return Right;
+				case facing::Back:
+					return Down;
+				}
+
+			case direction::Left:
+				switch (f) {
+				case facing::Front:
+					return Left;
+				case facing::LeftSide:
+					return Down;
+				case facing::RightSide:
+					return Up;
+				case facing::Back:
+					return Right;
+				}
+
+			case direction::Right:
+				switch (f) {
+				case facing::Front:
+					return Right;
+				case facing::LeftSide:
+					return Up;
+				case facing::RightSide:
+					return Down;
+				case facing::Back:
+					return Left;
+				}
+
+			case direction::Down:
+				switch (f) {
+				case facing::Front:
+					return Down;
+				case facing::LeftSide:
+					return Right;
+				case facing::RightSide:
+					return Left;
+				case facing::Back:
+					return Up;
+				}
+			}
+		}
 	};
 
 	std::ostream& operator<<(std::ostream& out, const labyrinth& self) {
