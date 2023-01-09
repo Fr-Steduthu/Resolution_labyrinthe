@@ -11,7 +11,7 @@ namespace labyrinth_solver
 {
 	namespace solvers
 	{
-		enum state { victory, defeat, running, movement_denied };
+		enum state { victory, defeat, running };
 
 		class solver //Classe mere des heuristiques
 		{
@@ -26,10 +26,16 @@ namespace labyrinth_solver
 			state step() {
 				if (this->last_move_state == victory || this->lab.is_won()) {
 					this->last_move_state = victory;
+					LOG("Victory!");
+					return victory;
 				}
-				else {
-					this->last_move_state = this->move();
+				
+				if (this->last_move_state == defeat) {
+					LOG("Defeat...");
+					return defeat;
 				}
+
+				this->last_move_state = this->move();
 				return this->last_move_state;
 			}
 

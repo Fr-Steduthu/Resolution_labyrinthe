@@ -100,6 +100,33 @@ namespace labyrinth_solver
 		bool walkable(const coordinate& x, const coordinate& y) const {
 			return this->_grid.walkable(x, y);
 		}
+		bool walkable(const coords& c) const {
+			this->_grid.walkable(c);
+		}
+		bool walkable(const direction& d) const {
+			coords c(this->_player.coordinates());
+
+			switch (d)
+			{
+			case direction::Up :
+				c.x += -1;
+				break;
+			case direction::Left:
+				c.y += -1;
+				break;
+			case direction::Right:
+				c.y += +1;
+				break;
+			case direction::Down:
+				c.x += +1;
+				break;
+			}
+
+			return this->_grid.walkable(c);
+		}
+		bool walkable(const facing& f) const {
+			return this->walkable(this->facing_to_absolute(f));
+		}
 
 	protected:
 
@@ -112,7 +139,7 @@ namespace labyrinth_solver
 
 		const char wall;
 
-		direction facing_to_absolute(const facing& f) {
+		direction facing_to_absolute(const facing& f) const {
 			switch (this->_player_direction) {
 			case direction::Up:
 				switch (f) {
