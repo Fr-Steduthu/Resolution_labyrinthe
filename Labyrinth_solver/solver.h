@@ -56,6 +56,7 @@ namespace labyrinth_solver
 			virtual state move() = 0; //Code du bot
 
 		private:
+			
 
 		};
 	}
