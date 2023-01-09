@@ -147,6 +147,12 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="solver.h" />
+    <ClInclude Include="solver_left.h" />
+    <ClInclude Include="solver_left_alt.h" />
+    <ClInclude Include="solver_random.h" />
+    <ClInclude Include="solver_right.h" />
+    <ClInclude Include="solver_right_alt.h" />
+    <ClInclude Include="solver_straightline_right.h" />
     <ClInclude Include="tracer.h" />
   </ItemGroup>
   <ItemGroup>
