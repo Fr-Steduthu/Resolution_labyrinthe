@@ -10,7 +10,7 @@ labyrinth_solver::labyrinth&& play(labyrinth_solver::labyrinth&& c) {
 
 	std::cout << "Game starting" << std::endl;
 
-	while (!c.is_over()) {
+	while (!c.is_won()) {
 		std::cout.flush();
 		std::string s;
 		std::getline(std::cin, s);
@@ -21,7 +21,7 @@ labyrinth_solver::labyrinth&& play(labyrinth_solver::labyrinth&& c) {
 		std::cout << c << std::endl;
 	}
 
-	std::cout << "Game over" << std::endl;
+	std::cout << "Game over ; took " << c.character().path_taken().steps_taken() << " steps." << std::endl;
 
 	return std::move(c);
 }
