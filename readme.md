@@ -18,10 +18,18 @@ Le projet Resolution_Labyrinthe est composé en deux parties :
 
 #### App
 
-Le programme App prends un chemin d'accès en seul argument ; le chemin d'accès doit pointer sur un labyrinthe formaté de la façon suivante :
+Le programme App prends un chemin d'accès en seul argument.
+
+> Dans le cas où trop ou pas assez d'arguments seraient fournis, le programme se terminera et renveira le code d'erreur `-2`
+
+Le chemin d'accès doit pointer sur un labyrinthe formaté de la façon suivante :
 
 > Un rectangle de X par Y caractères, les fins de lignes étant marquées par le caractère `'\n'` ; le caractère `' '` indique un espace libre sur lequel le joueur peux se trouver,
 > tout autre caractère sera considéré comme un mur infranchissable, pour plus d'informations, se référer au sujet.
+
+> Dans le cas ou le fichier ne serait pas correctement formaté, l'application se terminera en ouvrant une fenêtre d'erreur.
+
+> Dans le cas où le fichier serait d'une autre nature, aucun comportement n'est prévu.
 
 On notera que cela ne corresponds pas aux fichiers fournis sur UPdago pour tester le projet, dont la longeur des lignes n'est pas uniforme !
 Ce problème est connu, mais n'a, à ce jour, pas encoré été réglé.
