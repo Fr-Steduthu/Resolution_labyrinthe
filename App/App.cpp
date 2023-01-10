@@ -42,7 +42,7 @@ void study(const labyrinth_solver::labyrinth& l) {
 
 }
 
-labyrinth_solver::labyrinth&& play(labyrinth_solver::labyrinth&& c) {
+void play(labyrinth_solver::labyrinth c) {
 
 	std::cout << "Game starting" << std::endl;
 
@@ -59,7 +59,6 @@ labyrinth_solver::labyrinth&& play(labyrinth_solver::labyrinth&& c) {
 
 	std::cout << "Game over ; took " << c.character().path_taken().steps_taken() << " steps." << std::endl;
 
-	return std::move(c);
 }
 
 int main(int argc, char * argv[])
