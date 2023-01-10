@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 
-#include "coordinates.h"
+#include "common.h"
 
 namespace labyrinth_solver
 {
@@ -15,15 +15,11 @@ namespace labyrinth_solver
 		class grid
 		{
 		public:
-
-			grid() = default; //Ne sert qu'a initialiser les champs
-
 			//On suppose que les terrains sont OBLIGATOIREMENT des rectangles
 			grid(const std::string& data) {
 				LOG("\t\tBuilding grid");
 				std::istringstream in(data);
 				size_t index = -1;
-
 
 				while (!in.eof()) {
 					index++;
@@ -54,7 +50,7 @@ namespace labyrinth_solver
 
 				if (x > this->MAX_X() || y > this->MAX_Y()) return false;
 
-				LOG("(" << x << ", " << y << ")");
+				//LOG("Is (" << x << ", " << y << ") walkable?");
 
 				return this->_walkables[x][y];
 			}

@@ -3,13 +3,15 @@
 #include <string>
 #include <fstream>
 #include <thread>
+#include <chrono>
 
 #define INCLUDE_SOLVERS
-#include "../Labyrinth_solver/pch.h"
+#include "../Labyrinth_solver/framework.h"
 
 
-void study(labyrinth_solver::labyrinth&& l) {
+void study(const labyrinth_solver::labyrinth& l) {
 	std::vector<std::thread> solvers;
+	//std::vector<std::chrono::duration> durations;
 
 	solvers.push_back(std::thread(
 		[l]() {
@@ -42,16 +44,7 @@ void study(labyrinth_solver::labyrinth&& l) {
 		[l]() {
 			labyrinth_solver::solvers::solver_right solv(l);
 			solv.solve();
-			LOG("solver_random fini");
-		}
-	));
-
-
-	solvers.push_back(std::thread(
-		[l]() {
-			labyrinth_solver::solvers::solver_right_alt solv(l);
-			solv.solve();
-			LOG("solver_random fini");
+			LOG("solver_right fini");
 		}
 	));
 
@@ -60,7 +53,7 @@ void study(labyrinth_solver::labyrinth&& l) {
 		[&l]() {
 			labyrinth_solver::solvers::solver_straightline_right solv(l);
 			solv.solve();
-			LOG("solver_random fini");
+			LOG("solver_straightline_right fini");
 		}
 	));
 
@@ -77,10 +70,10 @@ labyrinth_solver::labyrinth&& play(labyrinth_solver::labyrinth&& c) {
 		std::cout.flush();
 		std::string s;
 		std::getline(std::cin, s);
-		if (s == "up") { c.move(labyrinth_solver::direction::Up); }
-		if (s == "down") { c.move(labyrinth_solver::direction::Down); }
-		if (s == "left") { c.move(labyrinth_solver::direction::Left); }
-		if (s == "right") { c.move(labyrinth_solver::direction::Right); }
+		if (s == "up") { c.move(labyrinth_solver::direction::North); }
+		if (s == "down") { c.move(labyrinth_solver::direction::South); }
+		if (s == "left") { c.move(labyrinth_solver::direction::West); }
+		if (s == "right") { c.move(labyrinth_solver::direction::East); }
 		std::cout << c << std::endl;
 	}
 
@@ -91,18 +84,12 @@ labyrinth_solver::labyrinth&& play(labyrinth_solver::labyrinth&& c) {
 
 int main(int argc, char * argv[])
 {
-	LOG(argc << " : " << argv[1]);
 	if (argc != 2) return -2;
 
 	std::ifstream f(argv[1]);
 	labyrinth_solver::labyrinth n(f);
 
-	labyrinth_solver::solvers::solver_left_alt solv(n);
-	LOG("Solver built");
-	std::cout << solv.solve().steps_taken() << std::endl;
-	LOG("Solver over");
-
-	//study(labyrinth_solver::labyrinth(std::ifstream(argv[1])));
+	study(n);
 
 	return 0;
 }

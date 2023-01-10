@@ -11,6 +11,7 @@ namespace labyrinth_solver
 {
 	namespace solvers
 	{
+
 		enum state { victory, defeat, running };
 
 		class solver //Classe mere des heuristiques
@@ -21,17 +22,15 @@ namespace labyrinth_solver
 			solver(const labyrinth& d) : lab(d), last_move_state(running) {};
 			virtual ~solver() {};
 
-			//resolution_time
-
 			state step() {
 				if (this->last_move_state == victory || this->lab.is_won()) {
 					this->last_move_state = victory;
-					LOG("Victory!");
+					std::cout << "Victory!" << std::endl;
 					return victory;
 				}
 				
 				if (this->last_move_state == defeat) {
-					LOG("Defeat...");
+					std::cout << "Defeat..." << std::endl;
 					return defeat;
 				}
 

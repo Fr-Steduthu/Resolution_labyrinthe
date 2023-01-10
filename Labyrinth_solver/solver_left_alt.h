@@ -20,19 +20,15 @@ namespace labyrinth_solver
 		};
 
 		state solver_left_alt::move() {
+			bool wentfront = this->lab.move(Left);
 
-			if (!this->lab.move(Front)) {
-				LOG("Turned");
-				this->lab.character_rotate(RightSide);
-				this->steps_on_tile++;
-
-				if (this->steps_on_tile >= 4) {
-					return defeat;
-				}
+			if (!wentfront) {
+				if (!this->lab.move(Front)) {
+					if (!this->lab.move(Right)) this->lab.move(Back);
+				};
 
 			}
 			else {
-				LOG("Went front");
 				this->tile_stepped = this->lab.character().coordinates();
 				this->steps_on_tile = 0;
 			}

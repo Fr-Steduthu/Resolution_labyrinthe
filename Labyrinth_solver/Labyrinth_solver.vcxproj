@@ -141,7 +141,7 @@
   <ItemGroup>
     <ClInclude Include="framework.h" />
     <ClInclude Include="grid.h" />
-    <ClInclude Include="coordinates.h" />
+    <ClInclude Include="common.h" />
     <ClInclude Include="logger.h" />
     <ClInclude Include="labyrinth.h" />
     <ClInclude Include="pch.h" />
@@ -151,7 +151,6 @@
     <ClInclude Include="solver_left_alt.h" />
     <ClInclude Include="solver_random.h" />
     <ClInclude Include="solver_right.h" />
-    <ClInclude Include="solver_right_alt.h" />
     <ClInclude Include="solver_straightline_right.h" />
     <ClInclude Include="tracer.h" />
   </ItemGroup>

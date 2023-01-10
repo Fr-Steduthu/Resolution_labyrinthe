@@ -17,8 +17,8 @@ namespace labyrinth_solver
 
 		state solver_straightline_right::move() {
 
-			if (!this->lab.move(Right)) {
-				if (!this->lab.move(Down)) return defeat;
+			if (!this->lab.move(East)) {
+				if (!this->lab.move(South)) return defeat;
 			}
 
 			return running;

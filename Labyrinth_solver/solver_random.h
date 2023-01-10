@@ -21,11 +21,11 @@ namespace labyrinth_solver {
 		};
 
 		state solver_random::move() {
-			unsigned short int nb = this->lab.walkable(Front) + this->lab.walkable(RightSide) + this->lab.walkable(LeftSide);
+			unsigned short int nb = this->lab.walkable(Front) + this->lab.walkable(Right) + this->lab.walkable(Left);
 			if (nb == 1) {
 				this->lab.move(Front);
-				this->lab.move(LeftSide);
-				this->lab.move(RightSide);
+				this->lab.move(Left);
+				this->lab.move(Right);
 				return running;
 			}
 
@@ -39,10 +39,10 @@ namespace labyrinth_solver {
 			if (nb == 2) {
 
 				if (r <= RAND_MAX / 2) {
-					if (!this->lab.move(Front)) this->lab.move(RightSide);
+					if (!this->lab.move(Front)) this->lab.move(Right);
 				}
 				else {
-					if (!this->lab.move(LeftSide)) this->lab.move(RightSide);
+					if (!this->lab.move(Left)) this->lab.move(Right);
 				}
 
 				return running;
@@ -53,10 +53,10 @@ namespace labyrinth_solver {
 					this->lab.move(Front);
 				}
 				else if (r >= RAND_MAX / 3 * 2) {
-					this->lab.move(RightSide);
+					this->lab.move(Right);
 				}
 				else {
-					this->lab.move(LeftSide);
+					this->lab.move(Left);
 				}
 				return running;
 			}

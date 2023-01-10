@@ -11,14 +11,13 @@
 
 namespace labyrinth_solver
 {
-	enum facing { Front, Back, LeftSide, RightSide };
 
 	class labyrinth
 	{
 	public:
 		//Memory
 
-		labyrinth(std::ifstream& file, const char& wall = '#') : wall(wall) {
+		labyrinth(std::ifstream& file, const char& wall = '#') : wall(wall), _grid(nullptr) {
 			std::ostringstream data;
 
 			while (!file.eof()) {
@@ -27,7 +26,7 @@ namespace labyrinth_solver
 				data << s << (file.eof() ? "" : "\n");
 			}
 
-			this->_grid = grid(data.str());
+			this->_grid = new grid(data.str());
 		}
 		labyrinth(std::string data, char wall = '#') : wall(wall){
 			LOG("\tBuilding dungeon");
@@ -35,7 +34,9 @@ namespace labyrinth_solver
 			this->_grid = labyrinth_solver::grid(data);
 			LOG("\tdungeon built");
 		}
-		~labyrinth() = default;
+		~labyrinth() {
+			delete this->_grid;
+		};
 
 		/**Fonctions du joueur**/
 
@@ -47,23 +48,23 @@ namespace labyrinth_solver
 			player cpy(this->_player);
 			cpy.move(dir);
 
-			if (!this->_grid.walkable(cpy.coordinates())) {
+			if (!this->_grid->walkable(cpy.coordinates())) {
 				return false;
 			}
 
-			LOG(target_x << ", " << target_y << "is walkable");
+			//LOG(target_x << ", " << target_y << "  walkable");
 
 			this->_player = cpy;
 			this->_player_direction = dir;
 
 			return true;
 		}
-		bool move(const facing& f) {
+		inline bool move(const facing& f) {
 			return this->move(this->facing_to_absolute(f));
 		}
 
 		/**Grid / Player functions**/
-		inline bool is_won() const { return this->_player.x() == this->_grid.exit().x && this->_grid.exit().y == this->_player.y(); }
+		inline bool is_won() const { return this->_player.x() == this->_grid->exit().x && this->_grid->exit().y == this->_player.y(); }
 
 		/**Operators**/
 		operator std::string() const {
@@ -73,7 +74,21 @@ namespace labyrinth_solver
 				for (coordinate y = 0; y <= this->_grid.MAX_Y(); y++) {
 
 					if(this->_player.x() == x && this->_player.y() == y) {
-						s << (this->wall == '#' ? "@" : "#");
+						switch (this->_player_direction)
+						{
+						case North:
+							s << "^";
+							break;
+						case South:
+							s << "v";
+							break;
+						case West:
+							s << "<";
+							break;
+						case East:
+							s << ">";
+							break;
+						}
 						//LOG("Player is at (" << x << "; " << y << ")");
 						continue;
 					}
@@ -87,44 +102,47 @@ namespace labyrinth_solver
 		}
 
 		/**Data access**/
-		const player& character() const {
+		inline const player& character() const {
 			return this->_player;
 		}
-		const direction& character_facing() const {
+		inline const direction& character_facing() const {
 			return this->_player_direction;
 		}
-		void character_rotate(const facing& f) {
+		inline void character_rotate(const direction& d) {
+			this->_player_direction = d;
+		}
+		inline void character_rotate(const facing& f) {
 			this->_player_direction = this->facing_to_absolute(f);
 		}
 
-		bool walkable(const coordinate& x, const coordinate& y) const {
+		inline bool walkable(const coordinate& x, const coordinate& y) const {
 			return this->_grid.walkable(x, y);
 		}
-		bool walkable(const coords& c) const {
+		inline bool walkable(const coords& c) const {
 			this->_grid.walkable(c);
 		}
-		bool walkable(const direction& d) const {
+		inline bool walkable(const direction& d) const {
 			coords c(this->_player.coordinates());
 
 			switch (d)
 			{
-			case direction::Up :
+			case direction::North :
 				c.x += -1;
 				break;
-			case direction::Left:
+			case direction::West:
 				c.y += -1;
 				break;
-			case direction::Right:
+			case direction::East:
 				c.y += +1;
 				break;
-			case direction::Down:
+			case direction::South:
 				c.x += +1;
 				break;
 			}
 
 			return this->_grid.walkable(c);
 		}
-		bool walkable(const facing& f) const {
+		inline bool walkable(const facing& f) const {
 			return this->walkable(this->facing_to_absolute(f));
 		}
 
@@ -135,62 +153,62 @@ namespace labyrinth_solver
 		player _player;
 		direction _player_direction; //indique la direction dans laquelle "regarde" le joueur
 
-		grid _grid;
+		grid * _grid;
 
 		const char wall;
 
-		direction facing_to_absolute(const facing& f) const {
+		inline direction facing_to_absolute(const facing& f) const {
 			switch (this->_player_direction) {
-			case direction::Up:
+			case direction::North:
 				switch (f) {
 				case facing::Front:
-					return Up;
-				case facing::LeftSide:
-					return Left;
-				case facing::RightSide:
-					return Right;
+					return North;
+				case facing::Left:
+					return West;
+				case facing::Right:
+					return East;
 				case facing::Back:
-					return Down;
+					return South;
 				}
 
-			case direction::Left:
+			case direction::West:
 				switch (f) {
 				case facing::Front:
-					return Left;
-				case facing::LeftSide:
-					return Down;
-				case facing::RightSide:
-					return Up;
+					return West;
+				case facing::Left:
+					return South;
+				case facing::Right:
+					return North;
 				case facing::Back:
-					return Right;
+					return East;
 				}
 
-			case direction::Right:
+			case direction::East:
 				switch (f) {
 				case facing::Front:
-					return Right;
-				case facing::LeftSide:
-					return Up;
-				case facing::RightSide:
-					return Down;
+					return East;
+				case facing::Left:
+					return North;
+				case facing::Right:
+					return South;
 				case facing::Back:
-					return Left;
+					return West;
 				}
 
-			case direction::Down:
+			case direction::South:
 				switch (f) {
 				case facing::Front:
-					return Down;
-				case facing::LeftSide:
-					return Right;
-				case facing::RightSide:
-					return Left;
+					return South;
+				case facing::Left:
+					return East;
+				case facing::Right:
+					return West;
 				case facing::Back:
-					return Up;
+					return North;
 				}
 			}
 
-			return Up; //Dead code, on le laisse our les control path du compilo
+			return North; //Dead code, on le laisse our les control path du compilo
 		}
 	};
 

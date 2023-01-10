@@ -1,7 +1,7 @@
 #pragma once
 
 #include "tracer.h"
-#include "coordinates.h"
+#include "common.h"
 
 namespace labyrinth_solver
 {
@@ -34,19 +34,19 @@ namespace labyrinth_solver
 			void move(const direction& dir) {
 				switch (dir)
 				{
-				case direction::Up:
+				case direction::North:
 					this->_coordinates.x += -1;
 					this->_path.up();
 					break;
-				case direction::Left:
+				case direction::West:
 					this->_coordinates.y += -1;
 					this->_path.left();
 					break;
-				case direction::Right:
+				case direction::East:
 					this->_coordinates.y += +1;
 					this->_path.right();
 					break;
-				case direction::Down:
+				case direction::South:
 					this->_coordinates.x += +1;
 					this->_path.down();
 					break;

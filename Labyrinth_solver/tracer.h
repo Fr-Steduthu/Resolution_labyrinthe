@@ -2,13 +2,10 @@
 #include <string>
 #include <vector>
 
+#include "common.h"
+
 namespace labyrinth_solver
 {
-
-	enum direction
-	{
-		Up, Left, Down, Right
-	};
 
 	namespace
 	{
@@ -22,16 +19,16 @@ namespace labyrinth_solver
 
 			//Procedures
 			void up() {
-				this->path.push_back(Up);
+				this->path.push_back(North);
 			}
 			void down() {
-				this->path.push_back(Down);
+				this->path.push_back(South);
 			}
 			void left() {
-				this->path.push_back(Left);
+				this->path.push_back(West);
 			}
 			void right() {
-				this->path.push_back(Right);
+				this->path.push_back(East);
 			}
 
 			void append(const direction& dir) {
