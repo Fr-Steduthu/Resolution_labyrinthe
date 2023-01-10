@@ -12,7 +12,7 @@ namespace Tester
 	{
 	public:
 		
-		TEST_METHOD(move)
+		TEST_METHOD(move_resersability)
 		{
 			labyrinth_solver::player origin;
 			origin.move(labyrinth_solver::direction::South);
