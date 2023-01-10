@@ -73,16 +73,6 @@ La bibliothèque Labyrinth_solver est composée de :
 
 <hr/>
 
-## L'étude de performances
-
-#### Tests sur le fichier `lab2_10x10.txt`
-
-<img title="null" src="file:///C:/Users/erwan/Documents/GitHub/Resolution_labyrinthe/meusures_lb2_10x10.png" alt="null" href="./meusures_lab2_10x10">
-
-#### Tests sur le fichier `lab2_25x25.txt`
-
-<img title="null" src="file:///C:/Users/erwan/Documents/GitHub/Resolution_labyrinthe/meusures_lb1p_25x25.png" alt="null">
-
 ## Les problèmes
 
 1. Les tests
