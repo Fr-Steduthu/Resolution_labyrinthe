@@ -1,0 +1,70 @@
+# Read me
+
+<hr/>
+
+## Développement du projet
+
+                            Par Erwann SAINT GERMAIN
+
+Le projet Resolution_Labyrinthe est composé en deux parties : 
+
+- App
+
+- Labyrinth_solver
+
+#### App
+
+Le programme App prends un chemin d'accès en seul argument ; le chemin d'accès doit pointer sur un labyrinthe formaté de la façon suivante :
+
+> Un rectangle de X par Y caractères, les fins de lignes étant marquées par le caractère `'\n'` ; le caractère `' '` indique un espace libre sur lequel le joueur peux se trouver,
+> tout autre caractère sera considéré comme un mur infranchissable, pour plus d'informations, se référer au sujet.
+
+On notera que cela ne corresponds pas aux fichiers fournis sur UPdago pour tester le projet, dont la longeur des lignes n'est pas uniforme !
+Ce problème est connu, mais n'a, à ce jour, pas encoré été réglé.
+
+#### Labyrinth_solver
+
+> Le type `coordinate`, alias des `unsigned long long int`, représente l'enssemble des valeurs acceptables des coordonées d'une _grid_
+> 
+> Le type `coords` est une structure couplant deux `coordinate` sous les noms `x`et `y`
+
+La bibliothèque Labyrinth_solver est composée de :
+
+- Le namespace `labyrinth_solver`
+  
+  - _tracer_
+    
+    - Représente l'historique des déplacements du joueur via une liste de `direction`
+  
+  - _player_
+    
+    - Représente le joueur, contiens ses coordonées (accessibles via`const coords& player::coordinates() const`, `coordinate player::x() const` et `coordinate player::y() const`)
+      et un objet _tracer_ (`std::vector<direction> player::path_taken() const`).
+  
+  - _grid_
+    
+    - Représente le plateau de jeu, connais l'emplacement des murs et des cases libres (accessible via `bool grid::walkable(const coordinate&, const coordinate&) const` (true si libre, false sinon))
+      ainsi que de sa case de fin (`coords grid::exit() const`).
+  
+  - _labyrinth_
+    
+    - Fais le lien entre _player_ et _grid_ ; déplace le joueur selon le mouvement demandé si possible.
+      S'occupe de l'orientation du joueur (`direction`).
+  
+  > `direction` représente les quatres points cardinaux, une orientation absolue en d'autres termes ; on y trouve donc les valeurs `North` `West` `South` et `East` 
+  > 
+  > `facing`, par opposition, représente une orientation relative et est représentée par les valeurs `Front`, `Left`, `Back` et `Right`.
+  > 
+  > Les deux types énumérés peuvent êtres utilisés comme argument de la fonction `labyrinth::move`, mais ne déplacerons pas dans la même _direction_ selon l'orientation du joueur.
+
+- Le namespace `labyrinth_solver::solvers`
+  
+  Contiens la classe `solver`, une classe ayant pour seul but d'être spécifiée à travers la méthode virtuelle pure `state move()`
+  
+  > En théorie, seuls les `state` `running` et `defeat` devraient êtres utilisés lors de l'implémentation de cette méthode, l'état `victory` étant géré par la classe `solver`
+
+        On utilisera les méthodes `state step()` et `void solve()` pour faire avancer la résolution du labyrinthe.
+
+>  Des `solver` sont fournis avec la bibliothèque ; pour y avoir accès, il faudra cependant ajouter la ligne `#define INCLUDE_SOLVERS` avant la ligne d'importation de la bibliothèque.
+
+

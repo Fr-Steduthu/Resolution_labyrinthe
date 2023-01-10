@@ -25,12 +25,12 @@ namespace labyrinth_solver
 			state step() {
 				if (this->last_move_state == victory || this->lab.is_won()) {
 					this->last_move_state = victory;
-					std::cout << "Victory!" << std::endl;
+					LOG("Victory");
 					return victory;
 				}
 				
 				if (this->last_move_state == defeat) {
-					std::cout << "Defeat..." << std::endl;
+					LOG("Defeat...");
 					return defeat;
 				}
 

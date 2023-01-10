@@ -17,7 +17,7 @@ namespace labyrinth_solver
 	public:
 		//Memory
 
-		labyrinth(std::ifstream& file, const char& wall = '#') : wall(wall), _grid(nullptr) {
+		labyrinth(std::ifstream& file, const char& wall = '#') : wall(wall), _grid(nullptr), _player_direction(direction::North) {
 			std::ostringstream data;
 
 			while (!file.eof()) {
@@ -28,12 +28,24 @@ namespace labyrinth_solver
 
 			this->_grid = new grid(data.str());
 		}
-		labyrinth(std::string data, char wall = '#') : wall(wall){
-			LOG("\tBuilding dungeon");
+
+		labyrinth(std::string data, char wall = '#') : wall(wall), _grid(nullptr), _player_direction(direction::North){
 			//Le _player par defaut est OK
-			this->_grid = labyrinth_solver::grid(data);
-			LOG("\tdungeon built");
+			this->_grid = new labyrinth_solver::grid(data);
 		}
+
+		labyrinth(const labyrinth& other) : wall(other.wall), _grid(nullptr), _player(other._player), _player_direction(other._player_direction) {
+			this->_grid = new grid(*other._grid);
+		}
+
+		void operator= (const labyrinth& other) {
+			this->wall = other.wall;
+			delete this->_grid;
+			this->_grid = new grid(*other._grid);
+			this->_player = other._player;
+			this->_player_direction = other._player_direction;
+		}
+
 		~labyrinth() {
 			delete this->_grid;
 		};
@@ -70,8 +82,8 @@ namespace labyrinth_solver
 		operator std::string() const {
 			std::ostringstream s;
 
-			for (coordinate x = 0; x <= this->_grid.MAX_X(); x++) {
-				for (coordinate y = 0; y <= this->_grid.MAX_Y(); y++) {
+			for (coordinate x = 0; x <= this->_grid->MAX_X(); x++) {
+				for (coordinate y = 0; y <= this->_grid->MAX_Y(); y++) {
 
 					if(this->_player.x() == x && this->_player.y() == y) {
 						switch (this->_player_direction)
@@ -93,7 +105,7 @@ namespace labyrinth_solver
 						continue;
 					}
 					
-					s << (this->_grid.walkable(x, y) ? " " : &this->wall);
+					s << (this->walkable(x, y) ? " " : &this->wall);
 				}
 				s << "\n";
 			}
@@ -116,10 +128,10 @@ namespace labyrinth_solver
 		}
 
 		inline bool walkable(const coordinate& x, const coordinate& y) const {
-			return this->_grid.walkable(x, y);
+			return this->_grid->walkable(x, y);
 		}
 		inline bool walkable(const coords& c) const {
-			this->_grid.walkable(c);
+			this->walkable(c.x, c.y);
 		}
 		inline bool walkable(const direction& d) const {
 			coords c(this->_player.coordinates());
@@ -140,7 +152,7 @@ namespace labyrinth_solver
 				break;
 			}
 
-			return this->_grid.walkable(c);
+			return this->walkable(c.x, c.y);
 		}
 		inline bool walkable(const facing& f) const {
 			return this->walkable(this->facing_to_absolute(f));
@@ -155,7 +167,7 @@ namespace labyrinth_solver
 
 		grid * _grid;
 
-		const char wall;
+		char wall;
 
 		inline direction facing_to_absolute(const facing& f) const {
 			switch (this->_player_direction) {

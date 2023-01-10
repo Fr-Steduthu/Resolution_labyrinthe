@@ -1,6 +1,6 @@
 #pragma once
 
-#define DEBUG
+//#define DEBUG
 #include "logger.h"
 
 namespace labyrinth_solver {
@@ -8,7 +8,7 @@ namespace labyrinth_solver {
 
 	enum facing { Front, Back, Left, Right };
 
-	typedef unsigned long long int coordinate; // Permet de creer de treeeeeeees grands labyrinthes
+	typedef unsigned long long int coordinate; // Permet de creer de tres grands labyrinthes mais peux causer des overflow si un labyrinthe atteins la taille max ; tres peu probable
 
 	struct coords {
 		coordinate x;
