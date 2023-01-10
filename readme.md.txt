@@ -6,6 +6,10 @@
 
                             Par Erwann SAINT GERMAIN
 
+    Le projet a été développé et testé sur Visual Studio 2022.
+
+## L'architecture du projet
+
 Le projet Resolution_Labyrinthe est composé en deux parties : 
 
 - App
@@ -67,4 +71,25 @@ La bibliothèque Labyrinth_solver est composée de :
 
 >  Des `solver` sont fournis avec la bibliothèque ; pour y avoir accès, il faudra cependant ajouter la ligne `#define INCLUDE_SOLVERS` avant la ligne d'importation de la bibliothèque.
 
+<hr/>
 
+## L'étude de performances
+
+#### Tests sur le fichier `lab2_10x10.txt`
+
+<img title="null" src="file:///C:/Users/erwan/Documents/GitHub/Resolution_labyrinthe/meusures_lb2_10x10.png" alt="null" href="./meusures_lab2_10x10">
+
+#### Tests sur le fichier `lab2_25x25.txt`
+
+<img title="null" src="file:///C:/Users/erwan/Documents/GitHub/Resolution_labyrinthe/meusures_lb1p_25x25.png" alt="null">
+
+## Les problèmes
+
+1. Les tests
+   
+   * Par manque de temps et de connaissances sur la bibliothèque utilsée pour les tests, seul un test existe et n'a pas pû être lancé.
+
+2. Le format des fichiers
+   
+   * Comme précisé plus tôt, les fichiers fournis pour effectuer les tests, à l'instar de ceux pouvant être générés à l'[url](https://www.dcode.fr/generateur-labyrinthe) fournie, ne correspondent pas à ce que la bibliothque (et donc l'application) sont en mesure de lire ;
+     Il faut rajouter un espace sur la dernière et l'avant dernière ligne du labyrinthe pour qu'il soit lu correctement.

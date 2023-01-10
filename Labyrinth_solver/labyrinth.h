@@ -23,7 +23,7 @@ namespace labyrinth_solver
 
 		labyrinth(const labyrinth& other);
 
-		void operator= (const labyrinth& other) {
+		inline void operator= (const labyrinth& other) {
 			this->wall = other.wall;
 			delete this->_grid;
 			this->_grid = new grid(*other._grid);
@@ -47,7 +47,7 @@ namespace labyrinth_solver
 		inline bool is_won() const { return this->_player.x() == this->_grid->exit().x && this->_grid->exit().y == this->_player.y(); }
 
 		/**Operators**/
-		operator std::string() const {
+		inline operator std::string() const {
 			std::ostringstream s;
 
 			for (coordinate x = 0; x <= this->_grid->MAX_X(); x++) {
@@ -195,6 +195,6 @@ namespace labyrinth_solver
 	
 }
 
-inline std::ostream& operator<<(std::ostream& out, const labyrinth_solver::labyrinth& self) {
+inline std::ostream& operator<<(std::ostream& out, const labyrinth_solver::labyrinth& self) { // inline, sinon ça compile pas
 	return (out << (std::string)self);
 }

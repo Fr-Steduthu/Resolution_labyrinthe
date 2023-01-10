@@ -38,6 +38,8 @@ bool labyrinth_solver::labyrinth::move(const direction& dir) {
 
 	//LOG(target_x << ", " << target_y << "  walkable");
 
+	//std::cout << *this;
+
 	this->_player = cpy;
 	this->_player_direction = dir;
 
