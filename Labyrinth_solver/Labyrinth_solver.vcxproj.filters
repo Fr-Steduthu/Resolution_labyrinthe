@@ -42,19 +42,7 @@
     <ClInclude Include="logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="solver_left.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="solver_right.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="solver_left_alt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="solver_straightline_right.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="solver_random.h">
+    <ClInclude Include="solvers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -63,6 +51,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="labyrinth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

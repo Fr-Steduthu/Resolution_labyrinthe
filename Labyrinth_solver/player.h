@@ -31,7 +31,7 @@ namespace labyrinth_solver
 				return this->_coordinates;
 			}
 
-			void move(const direction& dir) {
+			void move(const direction& dir) { //inline parce que sinon la compil marche pas
 				switch (dir)
 				{
 				case direction::North:

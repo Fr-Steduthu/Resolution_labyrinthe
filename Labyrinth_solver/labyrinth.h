@@ -17,26 +17,11 @@ namespace labyrinth_solver
 	public:
 		//Memory
 
-		labyrinth(std::ifstream& file, const char& wall = '#') : wall(wall), _grid(nullptr), _player_direction(direction::North) {
-			std::ostringstream data;
+		labyrinth(std::ifstream& file, const char& wall = '#');
 
-			while (!file.eof()) {
-				std::string s;
-				std::getline(file, s);
-				data << s << (file.eof() ? "" : "\n");
-			}
+		labyrinth(std::string data, const char& wall = '#');
 
-			this->_grid = new grid(data.str());
-		}
-
-		labyrinth(std::string data, char wall = '#') : wall(wall), _grid(nullptr), _player_direction(direction::North){
-			//Le _player par defaut est OK
-			this->_grid = new labyrinth_solver::grid(data);
-		}
-
-		labyrinth(const labyrinth& other) : wall(other.wall), _grid(nullptr), _player(other._player), _player_direction(other._player_direction) {
-			this->_grid = new grid(*other._grid);
-		}
+		labyrinth(const labyrinth& other);
 
 		void operator= (const labyrinth& other) {
 			this->wall = other.wall;
@@ -53,24 +38,7 @@ namespace labyrinth_solver
 		/**Fonctions du joueur**/
 
 		//Returns wether or not the player has been moved
-		bool move(const direction& dir) {
-			coordinate target_x(this->_player.x());
-			coordinate target_y(this->_player.y());
-			
-			player cpy(this->_player);
-			cpy.move(dir);
-
-			if (!this->_grid->walkable(cpy.coordinates())) {
-				return false;
-			}
-
-			//LOG(target_x << ", " << target_y << "  walkable");
-
-			this->_player = cpy;
-			this->_player_direction = dir;
-
-			return true;
-		}
+		bool move(const direction& dir);
 		inline bool move(const facing& f) {
 			return this->move(this->facing_to_absolute(f));
 		}
@@ -224,7 +192,9 @@ namespace labyrinth_solver
 		}
 	};
 
-	std::ostream& operator<<(std::ostream& out, const labyrinth& self) {
-		return (out << (std::string) self);
-	}
+	
+}
+
+inline std::ostream& operator<<(std::ostream& out, const labyrinth_solver::labyrinth& self) {
+	return (out << (std::string)self);
 }

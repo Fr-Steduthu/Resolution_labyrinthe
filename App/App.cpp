@@ -14,7 +14,7 @@ void __thrd(const labyrinth_solver::labyrinth& l, std::vector<std::time_t> * vec
 
 	std::chrono::system_clock::time_point s = std::chrono::system_clock::now();
 	solv.solve();
-	vec->operator[](i) = 489456151;//std::chrono::system_clock::to_time_t(s) - std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+	vec->operator[](i) = std::chrono::system_clock::to_time_t(s) - std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 }
 
 void study(const labyrinth_solver::labyrinth& l) {
