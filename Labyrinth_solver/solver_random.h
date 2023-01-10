@@ -7,17 +7,20 @@
 
 namespace labyrinth_solver {
 	namespace solvers {
-		class solver_random : solver {
+		class solver_random : public solver {
 		public:
-			solver_random(labyrinth l) : solver(l) {
+			solver_random(const labyrinth& l) : solver(l) {
+				LOG("solver_random : init rand");
 				std::srand(std::time(nullptr));
+				LOG("solver_random constructor over");
 			};
+			~solver_random() = default;
 
-		private :
-			coords previous;
+		private:
+			state move();
 		};
 
-		state solver_random::solver::move() {
+		state solver_random::move() {
 			unsigned short int nb = this->lab.walkable(Front) + this->lab.walkable(RightSide) + this->lab.walkable(LeftSide);
 			if (nb == 1) {
 				this->lab.move(Front);
@@ -57,6 +60,8 @@ namespace labyrinth_solver {
 				}
 				return running;
 			}
+
+			return defeat; //Dead code, on le mets juste pour que les control path du compilo ne génère pas de warnings
 		}
 	}
 }

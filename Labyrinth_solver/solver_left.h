@@ -6,33 +6,34 @@ namespace labyrinth_solver
 {
 	namespace solvers {
 
-		class solver_left : solver
+		class solver_left : public solver
 		{
 		private:
 			unsigned short int steps_on_tile; //Init a 0;
 			coords tile_stepped;
 
-			friend state labyrinth_solver::solvers::solver_left::solver::move();
+			state move();
 
 		public:
-			solver_left(labyrinth l) : solver(l), steps_on_tile(0), tile_stepped(this->lab.character().coordinates()) {}
+			solver_left(const labyrinth& l) : solver(l), steps_on_tile(0), tile_stepped(this->lab.character().coordinates()) {}
+			~solver_left() = default;
 		};
 
-		state solver_left::solver::move() {
+		state solver_left::move() {
 
 			if (!this->lab.move(LeftSide)) {
 
 				this->lab.character_rotate(LeftSide);
-				((solver_left*)this)->steps_on_tile++;
+				this->steps_on_tile++;
 
-				if (((solver_left*)this)->steps_on_tile >= 4) {
+				if (this->steps_on_tile >= 4) {
 					return defeat;
 				}
 
 			}
 			else {
-				((solver_left*)this)->tile_stepped = this->lab.character().coordinates();
-				((solver_left*)this)->steps_on_tile = 0;
+				this->tile_stepped = this->lab.character().coordinates();
+				this->steps_on_tile = 0;
 			}
 
 			return running;

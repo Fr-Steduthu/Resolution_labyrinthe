@@ -18,4 +18,13 @@
 #include "labyrinth.h"
 #include "solver.h"
 
+#ifdef INCLUDE_SOLVERS
+#include "solver_left.h"
+#include "solver_left_alt.h"
+#include "solver_random.h"
+#include "solver_right.h"
+#include "solver_right_alt.h"
+#include "solver_straightline_right.h"
+#endif
+
 #endif //PCH_H

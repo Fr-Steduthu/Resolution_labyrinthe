@@ -6,17 +6,16 @@ namespace labyrinth_solver
 {
 	namespace solvers {
 
-		class solver_straightline_right : solver
+		class solver_straightline_right : public solver
 		{
 		private:
-
-			friend state labyrinth_solver::solvers::solver_straightline_right::solver::move();
+			state move();
 
 		public:
 			solver_straightline_right(labyrinth l) : solver(l) {}
 		};
 
-		state solver_straightline_right::solver::move() {
+		state solver_straightline_right::move() {
 
 			if (!this->lab.move(Right)) {
 				if (!this->lab.move(Down)) return defeat;

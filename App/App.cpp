@@ -2,9 +2,72 @@
 #include <sstream>
 #include <string>
 #include <fstream>
+#include <thread>
 
+#define INCLUDE_SOLVERS
 #include "../Labyrinth_solver/pch.h"
 
+
+void study(labyrinth_solver::labyrinth&& l) {
+	std::vector<std::thread> solvers;
+
+	solvers.push_back(std::thread(
+		[l]() {
+			labyrinth_solver::solvers::solver_left solv(l);
+			solv.solve();
+			LOG("solver_left fini");
+		}
+	));
+
+
+	solvers.push_back(std::thread(
+		[l]() {
+			labyrinth_solver::solvers::solver_left_alt solv(l);
+			solv.solve();
+			LOG("solver_left_alt fini");
+		}
+	));
+
+
+	solvers.push_back(std::thread(
+		[l]() {
+			labyrinth_solver::solvers::solver_random solv(l);
+			solv.solve();
+			LOG("solver_random fini");
+		}
+	));
+
+
+	solvers.push_back(std::thread(
+		[l]() {
+			labyrinth_solver::solvers::solver_right solv(l);
+			solv.solve();
+			LOG("solver_random fini");
+		}
+	));
+
+
+	solvers.push_back(std::thread(
+		[l]() {
+			labyrinth_solver::solvers::solver_right_alt solv(l);
+			solv.solve();
+			LOG("solver_random fini");
+		}
+	));
+
+
+	solvers.push_back(std::thread(
+		[&l]() {
+			labyrinth_solver::solvers::solver_straightline_right solv(l);
+			solv.solve();
+			LOG("solver_random fini");
+		}
+	));
+
+	for (std::thread& t : solvers) {
+		t.join();
+	}
+}
 
 labyrinth_solver::labyrinth&& play(labyrinth_solver::labyrinth&& c) {
 
@@ -26,32 +89,20 @@ labyrinth_solver::labyrinth&& play(labyrinth_solver::labyrinth&& c) {
 	return std::move(c);
 }
 
-int main()
+int main(int argc, char * argv[])
 {
-	std::ifstream data_input("C:\\Users\\erwan\\Documents\\GitHub\\Resolution_labyrinthe\\App\\lab3_3x3.txt"); //Probleme a la lecture ; UTF-8 en cause ?
-	std::ostringstream data("");
+	LOG(argc << " : " << argv[1]);
+	if (argc != 2) return -2;
 
-	while (!data_input.eof()) {
-		std::string s;
-		std::getline(data_input, s);
-		data << s << (data_input.eof() ? "" : "\n");
-	}
+	std::ifstream f(argv[1]);
+	labyrinth_solver::labyrinth n(f);
 
-	std::string d("   #######\n         #\n####  ####\n#     #  #\n#  #  #  #\n#  #      \n#######   \n");
+	labyrinth_solver::solvers::solver_left_alt solv(n);
+	LOG("Solver built");
+	std::cout << solv.solve().steps_taken() << std::endl;
+	LOG("Solver over");
 
-	labyrinth_solver::labyrinth lab(data.str());
-
-	//std::cout << (std::string) lab;
-
-	std::cout << lab;
-
-	lab.move(labyrinth_solver::Down);
-
-	std::cout << (std::string) lab;
-
-	labyrinth_solver::labyrinth over(std::move(play(std::move(lab))));
-
-	//lab.character().path_taken();
+	//study(labyrinth_solver::labyrinth(std::ifstream(argv[1])));
 
 	return 0;
 }

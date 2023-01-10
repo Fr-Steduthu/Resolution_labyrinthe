@@ -18,7 +18,7 @@ namespace labyrinth_solver
 		public:
 
 			solver(std::string lab, const char& wall = '#') : lab(labyrinth_solver::labyrinth(lab, wall)), last_move_state(running) {};
-			solver(labyrinth d) : lab(d), last_move_state(running) {};
+			solver(const labyrinth& d) : lab(d), last_move_state(running) {};
 			virtual ~solver() {};
 
 			//resolution_time
@@ -39,12 +39,12 @@ namespace labyrinth_solver
 				return this->last_move_state;
 			}
 
-			bool solve() {
-				//start chrono
+			tracer solve() {
 				while (this->last_move_state != victory && this->last_move_state != defeat) {
 					this->step();
 				}
-				//end chrono
+
+				return this->lab.character().path_taken();
 			}
 
 			inline operator std::string() {

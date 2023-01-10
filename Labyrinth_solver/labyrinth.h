@@ -18,7 +18,7 @@ namespace labyrinth_solver
 	public:
 		//Memory
 
-		labyrinth(std::ifstream file, const char& wall = '#') : wall(wall) {
+		labyrinth(std::ifstream& file, const char& wall = '#') : wall(wall) {
 			std::ostringstream data;
 
 			while (!file.eof()) {
@@ -189,6 +189,8 @@ namespace labyrinth_solver
 					return Up;
 				}
 			}
+
+			return Up; //Dead code, on le laisse our les control path du compilo
 		}
 	};
 
